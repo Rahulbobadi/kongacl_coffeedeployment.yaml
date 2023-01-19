@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+    plugins.konghq.com: jwt
+spec:
+  tls:
+  - hosts:
+    - test.mydomain.com
+    secretName: mydomain-tls
+  rules:
+  - host: test.mydomain.com
+    http:
+      paths:
+      - path: /coffee
+        backend:
+          serviceName: coffee-svc
+          servicePort: 443
+      - path: /tea
+        backend:
+          serviceName: tea-svc
+          servicePort: 443
